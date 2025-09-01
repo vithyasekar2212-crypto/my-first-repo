@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PancakeSwap Clone</title>
+  <style>
+    /* Basic Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #121212;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #1e1e1e;
+      border-radius: 16px;
+      width: 350px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 16px;
+      font-weight: 600;
+      color: #ffcb05; /* PancakeSwap yellow */
+    }
+
+    .swap-box {
+      background: #2c2c2c;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .swap-box label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #ddd;
+    }
+
+    .input-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    input[type="number"] {
+      background: #1e1e1e;
+      border: none;
+      color: #fff;
+      padding: 8px 12px;
+      font-size: 18px;
+      border-radius: 8px;
+      flex-grow: 1;
+      margin-right: 12px;
+    }
+
+    select {
+      background: #ffcb05;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #121212;
+    }
+
+    button.swap-btn {
+      width: 100%;
+      background: #ffcb05;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: #121212;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button.swap-btn:hover {
+      background: #e6b804;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      margin-top: 12px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>PancakeSwap Clone</h2>
+
+    <div class="swap-box">
+      <label for="inputAmount">From</label>
+      <div class="input-group">
+        <input type="number" id="inputAmount" placeholder="0.0" min="0" />
+        <select id="inputToken">
+          <option value="bnb">BNB</option>
+          <option value="cake">CAKE</option>
+          <option value="busd">BUSD</option>
+          <option value="usdt">USDT</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="swap-box">
+      <label for="outputAmount">To</label>
+      <div class="input-group">
+        <input type="number" id="outputAmount" placeholder="0.0" min="0" disabled />
+        <select id="outputToken">
+          <option value="cake">CAKE</option>
+          <option value="bnb">BNB</option>
+          <option value="busd">BUSD</option>
+          <option value="usdt">USDT</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="swap-btn" id="swapBtn">Swap</button>
+
+    <div class="footer">
+      This is a frontend clone. No real transactions will happen.
+    </div>
+  </div>
+
+  <script>
+    // Basic mock swap functionality (no blockchain interaction)
+    const inputAmount = document.getElementById('inputAmount');
+    const outputAmount = document.getElementById('outputAmount');
+    const inputToken = document.getElementById('inputToken');
+    const outputToken = document.getElementById('outputToken');
+    const swapBtn = document.getElementById('swapBtn');
+
+    // Mock prices for tokens (for demo only)
+    const prices = {
+      bnb: 300,   // $300
+      cake: 20,   // $20
+      busd: 1,    // $1
+      usdt: 1     // $1
+    };
+
+    function calculateOutput() {
+      const amount = parseFloat(inputAmount.value);
+      if (isNaN(amount) || amount <= 0) {
+        outputAmount.value = '';
+        return;
+      }
+      const from = inputToken.value;
+      const to = outputToken.value;
+
+      // Simple conversion using mock prices
+      const fromPrice = prices[from];
+      const toPrice = prices[to];
+      const converted = (amount * fromPrice) / toPrice;
+      outputAmount.value = converted.toFixed(4);
+    }
+
+    inputAmount.addEventListener('input', calculateOutput);
+    inputToken.addEventListener('change', calculateOutput);
+    outputToken.addEventListener('change', calculateOutput);
+
+    swapBtn.addEventListener('click', () => {
+      alert('Swap clicked! This is just a frontend demo.');
+    });
+  </script>
+</body>
+</html>
+
